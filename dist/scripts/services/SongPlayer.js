@@ -21,8 +21,8 @@
           var setSong = function(song) {
                 if (currentBuzzObject) {
                 currentBuzzObject.stop();
-                SongPlayer.currentSong.playing = null;
-                }
+                SongPlayer.currentSong.playing = null; 
+               }
  
          currentBuzzObject = new buzz.sound(song.audioUrl, {
             formats: ['mp3'],
@@ -30,6 +30,7 @@
          });
  
                 SongPlayer.currentSong = song;
+              return song;
          };
          
 /**
@@ -82,12 +83,13 @@
 */  
          
             SongPlayer.previous = function() {
-                 var currentSongIndex = getSongIndex(SongPlayer.currentSong);
-                 currentSongIndex--;
-                
+                var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+                currentSongIndex--;
+                console.log(SongPlayer.currentSong)
                 if (currentSongIndex < 0) {
-                     currentBuzzObject.stop();
-                     SongPlayer.currentSong.playing = null;
+                     /*currentBuzzObject.stop();
+                     SongPlayer.currentSong.playing = null;*/
+                    stopSong();
                 }
                 
                 else {
@@ -97,7 +99,27 @@
                  }
                 
              };
+
+         /**
+ * @function Songplayer.next
+ * @desc gets the index of the song after the current song in the album object.
+*/  
          
+            SongPlayer.next = function() {
+                var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+                 currentSongIndex++;
+                
+                if (currentSongIndex > currentAlbum.songs.length-1) {
+                    stopSong();
+                }
+                
+                else {
+                     var song = currentAlbum.songs[currentSongIndex];
+                     setSong(song);
+                     playSong(song);
+                 }
+                
+             };
 /**
  * @function playSong
  * @desc Plays the current Buzz object and sets the song.playing variable to true.
@@ -106,6 +128,17 @@
              currentBuzzObject.play();
              song.playing = true;   
          }
+         
+         /**
+ * @function stopSong
+ * @desc Stops the current Buzz object and sets the song.playing variable to null.
+*/      
+         var stopSong = function(song){
+             currentBuzzObject.stop();
+             /*song.playing = null; */ 
+             SongPlayer.currentSong.playing = null;
+         }
+         
             return SongPlayer;
      }
  
