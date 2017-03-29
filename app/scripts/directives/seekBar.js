@@ -29,6 +29,13 @@
              scope.fillStyle = function() {
                  return {width: percentString()};
              };
+             
+ /*Write a scope.thumbStyle method – similar to scope.fillStyle – that updates the position of the seek bar thumb. Use the ngStyle directive in the view to apply this style to the element.*/
+             
+             scope.thumbStyle = function() {
+                 return {left: percentString()};  
+             };
+             
              scope.onClickSeekBar = function(event) {
              var percent = calculatePercent(seekBar, event);
              scope.value = percent * scope.max;
@@ -39,6 +46,7 @@
                     scope.$apply(function() {
                         scope.value = percent * scope.max;
          });
+              
          });
 
              $document.bind('mouseup.thumb', function() {
