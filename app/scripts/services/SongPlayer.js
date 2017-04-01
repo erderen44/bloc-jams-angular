@@ -55,7 +55,13 @@
  * @desc defines currently playing audio file
  * @type {Object}
  */   
-         SongPlayer.currentSong = null;       
+         SongPlayer.currentSong = null; 
+         
+ /**
+ * @desc Current playback time (in seconds) of currently playing song
+ * @type {Number}
+ */
+         SongPlayer.currentTime = null;
          
          SongPlayer.play = function(song) {
             song = song || SongPlayer.currentSong; 
@@ -120,6 +126,19 @@
                  }
                 
              };
+         
+         /**
+ * @function setCurrentTime
+ * @desc Set current time (in seconds) of currently playing song
+ * @param {Number} time
+ */
+             SongPlayer.setCurrentTime = function(time) {
+                 if (currentBuzzObject) {
+                     currentBuzzObject.setTime(time);
+                 }
+             };
+         
+         
 /**
  * @function playSong
  * @desc Plays the current Buzz object and sets the song.playing variable to true.
