@@ -1,5 +1,5 @@
  (function() {
-     function SongPlayer(Fixtures) {
+     function SongPlayer($rootScope, Fixtures) {
           var SongPlayer = {};
  
          /**
@@ -19,19 +19,25 @@
  * @param {Object} song
  */       
           var setSong = function(song) {
-                if (currentBuzzObject) {
-                currentBuzzObject.stop();
-                SongPlayer.currentSong.playing = null; 
-               }
+                    if (currentBuzzObject) {
+                    currentBuzzObject.stop();
+                    SongPlayer.currentSong.playing = null; 
+                    }
  
-         currentBuzzObject = new buzz.sound(song.audioUrl, {
-            formats: ['mp3'],
-            preload: true
-         });
- 
+                currentBuzzObject = new buzz.sound(song.audioUrl, {
+                    formats: ['mp3'],
+                    preload: true
+                });
+
+                currentBuzzObject.bind('timeupdate', function() {
+                    $rootScope.$apply(function() {
+                    SongPlayer.currentTime = currentBuzzObject.getTime();
+                    });
+                });
+              
                 SongPlayer.currentSong = song;
-              return song;
-         };
+                return song;
+          };
          
 /**
  * @function playSong
@@ -126,6 +132,19 @@
                  }
                 
              };
+         
+         /**
+ * @function setCurrentTime
+ * @desc Set current time (in seconds) of currently playing song
+ * @param {Number} time
+ */
+             SongPlayer.setCurrentTime = function(time) {
+                 if (currentBuzzObject) {
+                     currentBuzzObject.setTime(time);
+                 }
+             };
+         
+         
 /**
  * @function playSong
  * @desc Plays the current Buzz object and sets the song.playing variable to true.
@@ -150,5 +169,5 @@
  
     angular
          .module('blocJams')
-         .factory('SongPlayer', ['Fixtures', SongPlayer]);
+         .factory('SongPlayer', ['$rootScope', 'Fixtures', SongPlayer]);
  })();
