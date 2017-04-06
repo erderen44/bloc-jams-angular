@@ -48,6 +48,10 @@
      font-size: 1.6rem;
  }
 
+.ion-pause, .ion-play {
+    margin-right: 16.5%;
+}
+
  .player-bar .currently-playing {
      width: 50%;
      text-align: center;

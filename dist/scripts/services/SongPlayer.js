@@ -149,7 +149,11 @@
                  }
              };
          
-         
+            SongPlayer.setVolume = function(volume){
+                if (currentBuzzObject){
+                    currentBuzzObject.setVolume(volume);
+                }
+            }
 /**
  * @function playSong
  * @desc Plays the current Buzz object and sets the song.playing variable to true.
