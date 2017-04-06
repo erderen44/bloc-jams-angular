@@ -37,8 +37,13 @@
               
                 SongPlayer.currentSong = song;
                 return song;
+              
+   // functions for assignment 11 here             
+                SongPlayer.volume = currentBuzzObject.getVolume();
+                SongPlayer.setVolume = currentBuzzObject.setVolume();
+              
           };
-         
+ 
 /**
  * @function playSong
  * @desc Plays the current Buzz object and sets the song.playing variable to true.
@@ -144,7 +149,11 @@
                  }
              };
          
-         
+            SongPlayer.setVolume = function(volume){
+                if (currentBuzzObject){
+                    currentBuzzObject.setVolume(volume);
+                }
+            }
 /**
  * @function playSong
  * @desc Plays the current Buzz object and sets the song.playing variable to true.
